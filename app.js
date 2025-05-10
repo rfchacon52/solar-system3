@@ -18,7 +18,6 @@ mongoose.connect(process.env.MONGO_URI, {
 })
 .then(() => {
     console.log("MongoDB Connection Successful");
-     console.log('MongoDB Version:', result.version);
 })
 .catch(err => {
     console.error("MongoDB Connection Error:", err);
