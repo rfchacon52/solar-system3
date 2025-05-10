@@ -30,14 +30,17 @@ jobs:
       - name: npm install dotenv 
         run: npm install 
 
-      - name: Instal fixl
+      - name: Run npm audit fix
         run: npm audit fix --force
 
-      - name: npm ci 
+      - name: Run npm ci 
         run: npm ci
 
-      - name: Unit Testing
+      - name: Run Unit Testing
         run: npm test
+      
+      - name: Running Code Coverage
+        run: npm run coverage
         
 
 
