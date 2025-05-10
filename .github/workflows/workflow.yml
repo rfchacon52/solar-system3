@@ -21,6 +21,9 @@ jobs:
       
       - name: Install Dependencies
         run: npm install
+        
+      - name: npm install dotenv 
+        run: npm install 
 
       - name: Instal fixl
         run: npm audit fix --force
