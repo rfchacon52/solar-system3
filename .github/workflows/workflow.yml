@@ -26,24 +26,20 @@ jobs:
       
       - name: Install Dependencies
         run: npm install
-        
-      - name: npm install dotenv 
-        run: npm install 
 
       - name: Run npm audit fix
         run: npm audit fix --force
-
+        
       - name: Run npm ci 
         run: npm ci
 
       - name: Run Unit Testing
         run: npm test
-
       - uses: actions/upload-artifact@v4
         with:
           name: Test-Results
           path: test-results.xml
-
+       
       - name: Running Code Coverage
         run: npm run coverage        
         
