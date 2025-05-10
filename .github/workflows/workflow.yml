@@ -25,10 +25,11 @@ jobs:
       - name: Instal fixl
         run: npm audit fix --force
 
-      - name: CI
+      - name: npm ci 
         run: npm ci
 
       - name: Unit Testing
         run: npm test
+        
 
 
