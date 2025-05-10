@@ -9,13 +9,13 @@ on:
 jobs:
   unit-testing:
     name: Unit Testing
-    runs-on: ubuntu-latest  
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Setup Node.js - 18
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: 18 # Use the environment variable
       
