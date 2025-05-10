@@ -25,11 +25,9 @@ jobs:
           node-version: 18 # Use the environment variable
       
       - name: Install Dependencies
-        continue-on-error: true
         run: npm install
 
       - name: Run npm audit fix
-        continue-on-error: true
         run: npm audit fix --force
         
       - name: Run npm ci 
