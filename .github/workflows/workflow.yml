@@ -1,4 +1,5 @@
 name: Solar System Workflow
+# Solar system workflow
 
 on:
   workflow_dispatch:
@@ -43,6 +44,10 @@ jobs:
        
       - name: Running Code Coverage
         continue-on-error: true
-        run: npm run coverage        
+        run: npm run coverage     
         
+      - name: Failing step
+        if: ${{ failure() }}
+        run: exit 1
+
 
