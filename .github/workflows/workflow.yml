@@ -24,6 +24,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18 # Use the environment variable
+
+      - name: NPM Cache depend
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modiules-${{ hashFiles('package-lock.json') }}
       
       - name: Install Dependencies
         run: npm install
