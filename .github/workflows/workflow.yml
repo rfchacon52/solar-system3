@@ -106,6 +106,6 @@ jobs:
          with:
            context: .
            push: true
-           tags: 
+           tags: |
             ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
             ghcr.io/${{ github.repository_owner }}/solar-system:${{ github.sha }}
