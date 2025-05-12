@@ -20,10 +20,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js - 18
+      - name: Setup Node.js - 20
         uses: actions/setup-node@v3
         with:
-          node-version: 18 # Use the environment variable
+          node-version: 20 # Use the environment variable
 
       - name: NPM Cache depend
         uses: actions/cache@v3
@@ -51,10 +51,6 @@ jobs:
       - name: Running Code Coverage
         continue-on-error: true
         run: npm run coverage     
-        
-      - name: Failing step
-        if: ${{ failure() }}
-        run: echo "Build failed "
-      
+              
 
 
