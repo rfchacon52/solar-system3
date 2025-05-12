@@ -53,7 +53,8 @@ jobs:
         run: npm run coverage  
         
   docker:
-    name: Containers
+    name: Docker Containers
+    needs: [unit-testing]
     runs-on: ubuntu-latest
     steps:
        - name: Checkout Repository
