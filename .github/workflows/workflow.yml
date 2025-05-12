@@ -55,6 +55,9 @@ jobs:
   docker:
     name: Docker Containers
     needs: [unit-testing]
+    permissions:
+       packages: write
+    
     runs-on: ubuntu-latest
     steps:
        - name: Checkout Repository
