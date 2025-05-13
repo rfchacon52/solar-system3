@@ -16,15 +16,17 @@ jobs:
   unit-testing:
     name: Unit Testing
     runs-on: ubuntu-latest
+    container:
+      image: ghrc.io/node-and-packeges:22
+    services:
+      mongodb-service:
+        image: mongo-db:non-prod
+        ports:
+        - 27017:27017
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-
-      - name: Setup Node.js - 22
-        uses: actions/setup-node@v3
-        with:
-          node-version: 22 # Use the environment variable
-
+     
       - name: NPM Cache depend
         uses: actions/cache@v3
         with:
