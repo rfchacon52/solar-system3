@@ -7,20 +7,21 @@ on:
     branches:
       - main
       - 'feature/*'
-env:
-  MONGO_URI: 'mongodb+srv://supercluster.d83jj.mongodb.net/superData'
-  MONGO_USERNAME: ${{ vars.MONGO_USERNAME }}
-  MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
-
 jobs:
   unit-testing:
     name: Unit Testing
+    env:
+      MONGO_URI: 'mongodb+srv://supercluster.d83jj.mongodb.net/superData'
+      MONGO_USERNAME: ${{ vars.MONGO_USERNAME }}
+      MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
     runs-on: ubuntu-latest
     container:
       image: node:22
     services:
       mongodb-service:
         image: siddharth67/mongo-db:non-prod
+        options:
+          --name mongo
         ports:
         - 27017:27017
     steps:
