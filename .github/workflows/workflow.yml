@@ -1,5 +1,11 @@
 name: Solar System Workflow
+
+########################################
 # Solar system workflow
+#
+# Note: Requires setup of logins to Github
+# DocklerHub and Mongo DB
+########################################
 
 on:
   workflow_dispatch:
@@ -7,23 +13,35 @@ on:
     branches:
       - main
       - 'feature/*'
+
+env:
+      MONGO_URI: 'mongodb+srv://supercluster.d83jj.mongodb.net/superData'
+      MONGO_USERNAME: ${{ vars.MONGO_USERNAME }}
+      MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+      runs-on: ubuntu-latest
+
+#############################################
+# Unit Testing job using a container for the Job 
+# and a second container for the service. The env
+# info also copied inside the job. Also copy
+# the env lines above under the unit testing
+# job. No need to install node it in the image
+#############################################
 jobs:
   unit-testing:
     name: Unit Testing
+    container:
+      image: node:22
     env:
       MONGO_URI: 'mongodb+srv://supercluster.d83jj.mongodb.net/superData'
       MONGO_USERNAME: ${{ vars.MONGO_USERNAME }}
       MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
     runs-on: ubuntu-latest
-    container:
-      image: node:22
     services:
       mongodb-service:
         image: siddharth67/mongo-db:non-prod
         options:
           --name mongo
-        ports:
-        - 27017:27017
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -54,7 +72,11 @@ jobs:
       - name: Running Code Coverage
         continue-on-error: true
         run: npm run coverage  
+    
         
+#############################################
+# Setup for deployment of docker container
+#############################################
   docker:
     name: Docker Containers
     needs: [unit-testing]
@@ -71,9 +93,11 @@ jobs:
          with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
 ####################################
 # Login to GitHub Container Registry
 ####################################
+
        - name: Login to GitHub Container Registry
          uses: docker/login-action@v2.2.0  
          with:
@@ -81,7 +105,8 @@ jobs:
            username: ${{ github.repository_owner }}
            password: ${{ secrets.GITHUB_TOKEN }}
 ####################################
-# Build dokcer image using Dockerfile
+# Build dokcer image using Dockerfile 
+# set the push flag to false
 ####################################       
 
        - name: Build Docker
@@ -102,7 +127,9 @@ jobs:
                ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
 
           echo Testing Image URL with wget
-          wget -q -O - 127.0.0.1:3000/live | grep live    
+          echo #################################
+          wget -q -O - 127.0.0.1:3000/live | grep live  
+          echo #################################  
 
 ####################################
 # Push to Docker and GITHUB Registrys
